@@ -139,7 +139,7 @@ class Agent(object):
         if self.random_mode or random:
             return self.action_space.sample()
         else:
-            observation = torch.FloatTensor(observation).unsqueeze(0).cuda()
+            observation = torch.FloatTensor(observation).unsqueeze(0).to(self.device)
             with torch.no_grad():
                 if deterministic:
                     mean, _ = self.policy(observation)
