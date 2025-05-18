@@ -88,7 +88,7 @@ class Agent(object):
         lr = 3e-4
         reward_scale = 20
         random_mode = False
-        device = 'cpu'
+        device = 'cpu' 
 
         self.action_space = gym.spaces.Box(-1.0, 1.0, (21,), np.float64)
         self.action_dim = action_dim
