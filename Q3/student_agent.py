@@ -118,7 +118,7 @@ class Agent(object):
 
         self.checkpoint = checkpoint
         if self.checkpoint:
-            self.policy.load_state_dict(torch.load(checkpoint))
+            self.policy.load_state_dict(torch.load(checkpoint, map_location=torch.device('cpu')))
 
         self.policy_optimizer = torch.optim.Adam(self.policy.parameters(), lr=lr)
         self.q1_optimizer = torch.optim.Adam(self.q1.parameters(), lr=lr)
