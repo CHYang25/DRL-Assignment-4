@@ -82,7 +82,7 @@ class Agent(object):
         
         action_dim = 21
         state_dim = 67
-        checkpoint = "./output/2025.05.18-14.00.19/checkpoints/ckpt_1350000"
+        checkpoint = "./output/2025.05.18-14.00.19/checkpoints/ckpt_1390000"
         gamma = 0.99
         tau = 5e-3
         lr = 3e-4
