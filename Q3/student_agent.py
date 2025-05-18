@@ -135,7 +135,7 @@ class Agent(object):
         self.random_mode = random_mode
         self.device = device
 
-    def act(self, observation, random=False, deterministic=True):
+    def act(self, observation, random=False, deterministic=False):
         if self.random_mode or random:
             return self.action_space.sample()
         else:
