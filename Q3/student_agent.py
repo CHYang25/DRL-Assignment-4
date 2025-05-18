@@ -78,7 +78,7 @@ class QNetwork(nn.Module):
 # Do not modify the input of the 'act' function and the '__init__' function. 
 class Agent(object):
     """Agent that acts randomly."""
-    def __init__(self, total_train_steps=None):
+    def __init__(self):
         
         action_dim = 21
         state_dim = 67
@@ -124,12 +124,6 @@ class Agent(object):
         self.q1_optimizer = torch.optim.Adam(self.q1.parameters(), lr=lr)
         self.q2_optimizer = torch.optim.Adam(self.q2.parameters(), lr=lr)
         self.alpha_optimizer = torch.optim.Adam([self.log_alpha], lr=lr)
-
-        self.total_train_steps = total_train_steps
-        if total_train_steps:
-            self.policy_scheduler = CosineAnnealingLR(self.policy_optimizer, T_max=self.total_train_steps)
-            self.q1_scheduler = CosineAnnealingLR(self.q1_optimizer, T_max=self.total_train_steps)
-            self.q2_scheduler = CosineAnnealingLR(self.q2_optimizer, T_max=self.total_train_steps)
         
         self.loss_fn = nn.MSELoss()
         self.random_mode = random_mode
@@ -195,11 +189,6 @@ class Agent(object):
         policy_loss.backward()
         self.policy_optimizer.step()
 
-        if self.total_train_steps:
-            self.policy_scheduler.step()
-            self.q1_scheduler.step()
-            self.q2_scheduler.step()
-
         # Soft update of target networks
         for target_param, param in zip(self.q1_target.parameters(), self.q1.parameters()):
             target_param.data.copy_(target_param.data * (1 - self.tau) + param.data * self.tau)
@@ -214,7 +203,4 @@ class Agent(object):
             "alpha_loss": alpha_loss.detach().cpu().item(),
             "avg_q1": current_q1.mean().detach().cpu().item(),
             "alpha": self.alpha.detach().cpu().item(),
-            "lr_policy": self.policy_scheduler.get_last_lr()[0],
-            "lr_q1": self.q1_scheduler.get_last_lr()[0],
-            "lr_q2": self.q2_scheduler.get_last_lr()[0],
         }

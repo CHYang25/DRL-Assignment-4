@@ -55,7 +55,7 @@ def train(seed, max_steps, start_steps, batch_size, update_after, train_epochs, 
 
     env = make_dmc_env("humanoid-walk", np.random.randint(0, 1000000), flatten=True, use_pixels=False)
 
-    sac_agent = Agent(total_train_steps=((max_steps - update_after // update_every) * train_epochs) if lr_schedule else None)
+    sac_agent = Agent()
     steps = 0
     episode = 0
 
